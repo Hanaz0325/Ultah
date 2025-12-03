@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Kartu Ulang Tahun ke-10 untuk Adik Tercinta! 🎉</title>
+    <style>
+        /*
+        =============================
+        CSS
+        =============================
+        */
+
+        /* Variabel Warna Pastel */
+        :root {
+            --primary-pink: #FFC0CB; /* Pink */
+            --secondary-blue: #ADD8E6; /* Light Blue */
+            --accent-yellow: #FFFACD; /* Lemon Chiffon */
+            --text-dark: #333333;
+            --button-color: #9370DB; /* Medium Purple */
+            --button-hover: #8A2BE2; /* Blue Violet */
+            --box-shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        /* 1. Tampilan Khusus HP Android (Mobile Friendly & Responsif) */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--secondary-blue); /* Background awal */
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        /* Main Container untuk Kartu */
+        .card-container {
+            width: 95%;
+            max-width: 400px; /* Ukuran maksimal kartu agar fokus di mobile */
+            height: 80vh;
+            max-height: 700px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 3. Background Animasi (Awan bergerak) */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: moveClouds 40s linear infinite;
+        }
+
+        .cloud:nth-child(1) { width: 100px; height: 30px; top: 10%; left: -20%; animation-delay: 0s; }
+        .cloud:nth-child(2) { width: 150px; height: 50px; top: 30%; left: -40%; animation-delay: 10s; }
+        .cloud:nth-child(3) { width: 80px; height: 25px; top: 60%; left: -60%; animation-delay: 20s; }
+
+        @keyframes moveClouds {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(200%); }
+        }
+
+        /* Konten Utama Kartu */
+        .card-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out; /* Transisi saat konten berubah */
+        }
+
+        /* Foto Adik */
+        .photo-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px var(--box-shadow);
+            position: relative;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 9. Efek zoom halus */
+        }
+
+        .photo-container.zoomed img {
+            transform: scale(1.1);
+        }
+
+        /* Teks Ucapan */
+        .message-text {
+            color: var(--text-dark);
+            font-size: 1.2em;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+            font-weight: bold;
+            line-height: 1.5;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* 5. Tombol Bertahap */
+        .action-button {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0px 0 var(--button-hover);
+            transition: all 0.1s ease;
+            margin-top: 10px;
+            width: 80%;
+            max-width: 300px;
+            display: none; /* Tombol disembunyikan awalnya dan akan dimunculkan oleh JS */
+        }
+
+        .action-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px 0 var(--button-hover);
+        }
+
+        /* Musik On/Off Button */
+        .music-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 2px 5px var(--box-shadow);
+            z-index: 10;
+        }
+
+        /* Final Screen Styles */
+        #final-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-blue));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+            z-index: 5;
+        }
+
+        #final-screen.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .final-message {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .final-title {
+            color: white;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            animation: bounceIn 1s forwards;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Confetti Effect (Halaman Akhir) */
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-yellow);
+            border-radius: 50%;
+            opacity: 0;
+            animation: fall 3s ease-in-out infinite;
+            z-index: 6;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-happy-upbeat-tune-2420.mp3" type="audio/mp3">
+        Maaf, browser Anda tidak mendukung elemen audio.
+    </audio>
+    <audio id="click-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-1249.mp3" type="audio/mp3">
+    </audio>
+
+
+    <div class="card-container">
+        <div class="background-animation">
+            <div class="cloud" style="left: 10%;"></div>
+            <div class="cloud" style="left: 60%; top: 40%;"></div>
+            <div class="cloud" style="left: 30%; top: 80%;"></div>
+        </div>
+
+        <button id="music-btn" class="music-toggle">
+            <span id="music-icon">🎶</span>
+        </button>
+
+        <div class="card-content" id="card-content">
+            <h1>Selamat Ulang Tahun ke-10! 🥳</h1>
+
+            <div class="photo-container" id="photo-box">
+                <img id="photo" src="https://via.placeholder.com/400x400/FFB6C1/FFFFFF?text=Foto+Adik+Di+Sini" alt="Foto Adik">
+            </div>
+
+            <div class="message-text" id="message-area">
+                Tekan tombol **Mulai** di bawah ini untuk membuka kartu ucapan spesialmu!
+            </div>
+
+            <button class="action-button" id="btn-start" onclick="nextStage()">
+                Mulai 🎁
+            </button>
+            <button class="action-button" id="btn-surprise" onclick="nextStage()">
+                Buka Kejutan 🎈
+            </button>
+            <button class="action-button" id="btn-gift" onclick="nextStage()">
+                Lihat Hadiah 🎂
+            </button>
+            <button class="action-button" id="btn-final" onclick="nextStage()">
+                Pesan Terakhir 💌
+            </button>
+        </div>
+
+        <div id="final-screen">
+            <div class="final-title">Selamat Ulang Tahun yang ke-10 🎉</div>
+            <div class="final-message">
+                Semoga adikku yang paling cantik selalu bahagia, sehat, dan makin pintar. <br><br>
+                **Ini hadiah kecil dariku.** Semoga suka ya! Love you! ❤️
+            </div>
+            <button class="action-button" onclick="replayCard()" style="display: block; width: auto; margin-top: 30px;">
+                Ulangi Kartu 🔁
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        /*
+        =============================
+        JAVASCRIPT
+        =============================
+        */
+
+        // 1. Inisialisasi Audio
+        const bgMusic = document.getElementById('bg-music');
+        const clickSound = document.getElementById('click-sound');
+        const musicBtn = document.getElementById('music-btn');
+        const musicIcon = document.getElementById('music-icon');
+
+        // Untuk mencegah autoplay policy: coba mainkan musik, jika gagal, atur tombol ke mode PAUSED
+        let isMusicPlaying = false;
+
+        document.addEventListener('DOMContentLoaded', () => {
+             // Coba mainkan musik otomatis
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.textContent = '🎶';
+                }).catch(error => {
+                    // Autoplay diblokir
+                    isMusicPlaying = false;
+                    musicIcon.textContent = '🔇';
+                });
+            }
+        });
+
+
+        // 4. Fungsi Musik On/Off
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicIcon.textContent = '🔇';
+            } else {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.textContent = '🎶';
+                }).catch(e => {
+                    alert("Gagal memutar musik. Pastikan browser mengizinkan pemutaran audio.");
+                });
+            }
+            clickSound.play(); // Play sound effect klik
+        });
+
+
+        // 2. Data Kartu Ucapan
+        const stages = [
+            {
+                // Stage 0: Initial
+                button: 'btn-start',
+                message: 'Tekan tombol **Mulai** di bawah ini untuk membuka kartu Ucapan',
+                photoUrl: 'https://i.imgur.com/jsVrnbh.jpeg',
+                zoom: false,
+                final: false
+            },
+            {
+                // Stage 1: Mulai
+                button: 'btn-surprise',
+                message: 'Selamat ulang tahun yang ke-10 Tahun!!!🥳🥳🥳🥳',
+                photoUrl: 'https://i.imgur.com/a1z6zUd.jpeg', // Salmon
+                zoom: true,
+                final: false
+            },
+            {
+                // Stage 2: Buka Kejutan
+                button: 'btn-gift',
+                message: 'Semoga sehat selalu, nurut sama mamah sama aby',
+                photoUrl: 'https://i.imgur.com/tyF2GQt.jpeg', // Light Green
+                zoom: false,
+                final: false
+            },
+            {
+                // Stage 3: Lihat Hadiah
+                button: 'btn-final',
+                message: 'Jangan gede adat, yang rajin sekolahnya yang rajin belajarnya',
+                photoUrl: 'https://i.imgur.com/Jwe2aK5.jpeg', // Light Blue
+                zoom: true,
+                final: false
+            },
+            {
+                // Stage 4: Pesan Terakhir (Final)
+                button: null, // No button needed, transitions to final screen
+                message: 'Silahkan di buka hadiahnyaaa!!!🎁🎁🎁',
+                photoUrl: 'https://i.imgur.com/hdKyMuP.jpeg', // Plum
+                zoom: true,
+                final: true
+            }
+        ];
+
+        let currentStage = 0;
+
+        const photoBox = document.getElementById('photo-box');
+        const photo = document.getElementById('photo');
+        const messageArea = document.getElementById('message-area');
+        const cardContent = document.getElementById('card-content');
+        const finalScreen = document.getElementById('final-screen');
+
+        // 6 & 8. Fungsi untuk transisi halus
+        function updateCard(stageIndex) {
+            const data = stages[stageIndex];
+
+            // 6. Animasi Transisi (Opacity)
+            cardContent.style.opacity = 0;
+
+            setTimeout(() => {
+                // Update Konten
+                photo.src = data.photoUrl;
+                messageArea.innerHTML = data.message;
+
+                // 9. Efek Zoom pada Foto
+                photoBox.classList.remove('zoomed');
+                if (data.zoom) {
+                    setTimeout(() => photoBox.classList.add('zoomed'), 10);
+                }
+
+                // Sembunyikan semua tombol dan tampilkan tombol yang sesuai
+                document.querySelectorAll('.action-button').forEach(btn => btn.style.display = 'none');
+                if (data.button) {
+                    document.getElementById(data.button).style.display = 'block';
+                }
+
+                // Kembalikan opacity
+                cardContent.style.opacity = 1;
+            }, 500); // Tunggu setengah detik untuk transisi
+        }
+
+        // 5 & 6. Fungsi utama saat tombol ditekan
+        function nextStage() {
+            // 9. Sound effect klik tombol
+            clickSound.currentTime = 0;
+            clickSound.play();
+
+            currentStage++;
+
+            if (currentStage < stages.length) {
+                updateCard(currentStage);
+            }
+
+            // 7. Halaman Terakhir
+            if (currentStage === stages.length) {
+                // Transisi ke Final Screen
+                cardContent.style.opacity = 0;
+                setTimeout(() => {
+                    finalScreen.classList.add('active');
+                    // 7. Efek kembang api / confetti jatuh
+                    createConfetti();
+                }, 1000);
+            }
+        }
+
+        // Fungsi untuk mengulang kartu
+        function replayCard() {
+            finalScreen.classList.remove('active');
+            currentStage = 0;
+            updateCard(currentStage);
+            document.getElementById('btn-start').style.display = 'block';
+            clickSound.play();
+            // Hapus confetti
+            document.querySelectorAll('.confetti-piece').forEach(c => c.remove());
+        }
+
+        // 7. Confetti Creator
+        function createConfetti() {
+            const colors = ['#FFC0CB', '#ADD8E6', '#90EE90', '#FFFACD', '#DDA0DD'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti-piece');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDuration = `${Math.random() * 2 + 3}s`; // 3-5s
+                confetti.style.animationDelay = `${Math.random() * 2}s`; // 0-2s delay
+                finalScreen.appendChild(confetti);
+            }
+        }
+
+        // Panggil updateCard untuk inisialisasi tampilan awal
+        updateCard(0);
+        document.getElementById('btn-start').style.display = 'block';
+
+
+        /*
+        =============================
+        TUTORIAL SINGKAT
+        =============================
+        */
+        console.log(`
+        =============================
+        TUTORIAL KARTU ULANG TAHUN
+        =============================
+
+        1. CARA MENGGANTI FOTO:
+           - Cari bagian kode CSS di atas dengan komentar "// Stage X: ..."
+           - Ganti nilai 'photoUrl' dengan link URL langsung ke foto adik Anda.
+           - Contoh: 'photoUrl': 'https://s3.contoh.com/foto-adik-imut.jpg'
+           - Ada 4 foto yang bisa diganti.
+
+        2. CARA MENGGANTI LAGU & SOUND EFFECT:
+           - Cari bagian <audio id="bg-music"> di dalam tag <body>.
+           - Ganti nilai 'src' di dalam tag <source> dengan URL file MP3 lagu ulang tahun pilihan Anda.
+           - Ulangi proses yang sama untuk <audio id="click-sound"> untuk sound effect klik.
+
+        3. CARA MENGGANTI TEKS UCAPAN:
+           - Cari bagian kode CSS di atas dengan komentar "// Stage X: ..."
+           - Ganti nilai 'message' dengan teks ucapan yang Anda inginkan.
+           - Gunakan tanda **ganda** (**) untuk membuat teks tebal (bold).
+
+        4. CARA MENGGANTI TEKS/JUDUL FINAL:
+           - Cari tag <div id="final-screen">.
+           - Ganti teks di dalam <div class="final-title"> dan <div class="final-message">.
+
+        **PASTIKAN SEMUA URL (FOTO & LAGU) ADALAH LINK LANGSUNG KE FILE (misal: berakhir .jpg, .png, .mp3).**
+        `);
+    </script>
+</body>
+</html>
