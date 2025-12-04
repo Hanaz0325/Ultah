@@ -90,7 +90,8 @@
             z-index: 1;
             width: 100%;
             text-align: center;
-            transition: opacity 0.5s ease-in-out; /* Transisi saat konten berubah */
+            /* **PERUBAHAN DI SINI: Transisi lebih cepat (0.25s)** */
+            transition: opacity 0.25s ease-in-out; 
         }
 
         /* Foto Adik */
@@ -263,11 +264,11 @@
             <h1>Selamat Ulang Tahun ke-10! 🥳</h1>
 
             <div class="photo-container" id="photo-box">
-                <img id="photo" src="https://via.placeholder.com/400x400/FFB6C1/FFFFFF?text=Foto+Adik+Di+Sini" alt="Foto Adik">
+                <img id="photo" src="https://i.imgur.com/jsVrnbh.jpeg" alt="Foto Adik">
             </div>
 
             <div class="message-text" id="message-area">
-                Tekan tombol **Mulai** di bawah ini untuk membuka kartu ucapan spesialmu!
+                Tekan tombol **Mulai** di bawah ini untuk membuka kartu Ucapan
             </div>
 
             <button class="action-button" id="btn-start" onclick="nextStage()">
@@ -399,13 +400,14 @@
         const cardContent = document.getElementById('card-content');
         const finalScreen = document.getElementById('final-screen');
 
-        // 6 & 8. Fungsi untuk transisi halus
+        // 6 & 8. Fungsi untuk transisi halus (Waktu dipercepat)
         function updateCard(stageIndex) {
             const data = stages[stageIndex];
 
             // 6. Animasi Transisi (Opacity)
             cardContent.style.opacity = 0;
 
+            // **PERUBAHAN DI SINI: Delay dikurangi menjadi 250ms**
             setTimeout(() => {
                 // Update Konten
                 photo.src = data.photoUrl;
@@ -425,7 +427,7 @@
 
                 // Kembalikan opacity
                 cardContent.style.opacity = 1;
-            }, 500); // Tunggu setengah detik untuk transisi
+            }, 250); // <-- Diubah dari 500ms menjadi 250ms
         }
 
         // 5 & 6. Fungsi utama saat tombol ditekan
